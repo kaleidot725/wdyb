@@ -1,9 +1,9 @@
 ---
-name: wdyb
-description: "what do you build? - GitHubのPRのコード差分をhunk単位で1つずつ提示し、ユーザー自身の解釈を書き溜めたあとで答え合わせをして、結果を wdyb-<PR番号>.md に保存する。ユーザーが「/wdyb <PR番号>」と入力したとき、PRの理解度を確認したいとき、コードリーディングの練習をしたいときに使う。"
+name: q
+description: "what do you build? - GitHubのPRのコード差分をhunk単位で1つずつ提示し、ユーザー自身の解釈を書き溜めたあとで答え合わせをして、結果を wdyb-<PR番号>.md に保存する。ユーザーが「/wdyb:q <PR番号>」と入力したとき、PRの理解度を確認したいとき、コードリーディングの練習をしたいときに使う。"
 ---
 
-# wdyb (what do you build?)
+# q — what do you build?
 
 GitHub の Pull Request の差分を **hunk 単位** で 1 つずつ提示し、ユーザーが「この差分は何をやっているのか」を自分の言葉で書く。全 hunk を書き終えたあとで、はじめて答え合わせ（分析と指摘）を行う。
 
