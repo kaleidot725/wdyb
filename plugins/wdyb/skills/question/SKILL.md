@@ -3,7 +3,7 @@ name: question
 description: "what do you build? - Walk through a GitHub PR one hunk at a time, collect the user's own interpretation of each hunk, then grade them against the real code and save the result to wdyb-<PR-number>.md. Use when the user types /wdyb:question <PR number>, wants to check how well they understand a PR, or wants to practice code reading."
 ---
 
-# question — what do you build?
+# What do you build? - Question
 
 Present a PR's diff one hunk at a time and let the user write, in their own words, what each hunk does. Grade only after every hunk has been answered.
 
