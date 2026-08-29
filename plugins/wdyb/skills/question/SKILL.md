@@ -27,34 +27,8 @@ Write the report in the language the user has been writing in.
 
 ## Output format
 
-Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.html` instead; pass several to write several.
+Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.html` instead; pass several to write several. Start from the matching file in `references/` and replace its content, keeping its structure.
 
-- **JSON** — follow `references/report-schema.json`: one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Read the schema before writing and check the result parses
-- **HTML** — start from `references/report-template.html` and replace its content, keeping the structure and CSS as they are. One `<article class="hunk">` per hunk; in the diff, one `<i>` per line with class `a` (added), `d` (removed), `h` (the `@@` header), or none for context, and escape `<`, `>`, `&`. Size the `.bar` spans as percentages of the hunk count. It is a single self-contained file — no external assets
-
-## Markdown template
-
-````markdown
-# wdyb #<number> — <PR title>
-
-<URL> · 8 correct / 3 close / 2 wrong / 1 unanswered (14 hunks)
-
-## Summary
-
-<what kinds of change they tend to misread>
-
-## 2. src/api/client.ts `@@ -40,3 +48,9 @@` — ⚠️ Close
-
-```diff
-(diff)
-```
-
-**Your interpretation**
-> (verbatim)
-
-**What it actually does**
-(the real behavior)
-
-**Notes**
-(evidence, with file and line numbers)
-````
+- **Markdown** — `report-template.md`. One `###` section per hunk
+- **JSON** — `report-schema.json`: one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Check the result parses
+- **HTML** — `report-template.html`. Keep the CSS as is. One `<article class="hunk">` per hunk; in the diff, one `<i>` per line with class `a` (added), `d` (removed), `h` (the `@@` header), or none for context, and escape `<`, `>`, `&`. Size the `.bar` spans as percentages of the hunk count. Self-contained — no external assets
