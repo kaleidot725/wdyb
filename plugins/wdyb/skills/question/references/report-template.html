@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wdyb #123 — Add retry to API client</title>
+<style>
+  :root {
+    --bg: #fbfbf9; --card: #fff; --fg: #1c1b19; --muted: #6b6862; --line: #e4e1da;
+    --add-bg: #e6f4ea; --add-fg: #17643b; --del-bg: #fdeaea; --del-fg: #8c2020;
+    --ok: #2f7d4f; --close: #a8720d; --wrong: #b3352f; --none: #8b8781;
+    --code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614; --card: #1f1e1b; --fg: #eceae5; --muted: #9a958c; --line: #33312c;
+      --add-bg: #14301f; --add-fg: #7fd1a0; --del-bg: #331a1a; --del-fg: #f0a29c;
+      --ok: #7fd1a0; --close: #e0b357; --wrong: #ef8b83; --none: #7d7972;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 15px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px 96px; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 32px; }
+  h1 { font-size: 26px; line-height: 1.3; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .meta a { color: inherit; }
+  .score { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip {
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+  .chip b { font-variant-numeric: tabular-nums; }
+  .chip.ok { color: var(--ok); } .chip.close { color: var(--close); }
+  .chip.wrong { color: var(--wrong); } .chip.none { color: var(--none); }
+  .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 14px; background: var(--line); }
+  .bar span { display: block; }
+  .bar .ok { background: var(--ok); } .bar .close { background: var(--close); }
+  .bar .wrong { background: var(--wrong); } .bar .none { background: var(--none); }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 40px 0 12px; }
+  .summary { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+  .summary p { margin: 0 0 10px; } .summary p:last-child { margin: 0; }
+  .hunk { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .hunk-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .hunk-head .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hunk-head .file { font-family: var(--code); font-size: 13px; font-weight: 600; }
+  .hunk-head .at { font-family: var(--code); font-size: 12px; color: var(--muted); }
+  .verdict { margin-left: auto; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .verdict.ok { color: var(--ok); } .verdict.close { color: var(--close); }
+  .verdict.wrong { color: var(--wrong); } .verdict.none { color: var(--none); }
+  pre.diff {
+    font-family: var(--code); font-size: 12.5px; line-height: 1.55; margin: 0 0 16px;
+    border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; padding: 12px 0;
+  }
+  pre.diff i { display: block; padding: 0 14px; font-style: normal; white-space: pre; }
+  pre.diff i.a { background: var(--add-bg); color: var(--add-fg); }
+  pre.diff i.d { background: var(--del-bg); color: var(--del-fg); }
+  pre.diff i.h { color: var(--muted); }
+  .field { margin-bottom: 14px; } .field:last-child { margin-bottom: 0; }
+  .field h3 { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 5px; }
+  .field p { margin: 0 0 8px; } .field p:last-child { margin: 0; }
+  blockquote {
+    margin: 0; padding: 2px 0 2px 14px; border-left: 3px solid var(--line); color: var(--fg);
+  }
+  code { font-family: var(--code); font-size: 0.9em; }
+  footer { margin-top: 48px; color: var(--muted); font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Add retry to API client</h1>
+    <div class="meta">
+      <a href="https://github.com/owner/repo/pull/123">owner/repo #123</a>
+      · author · main ← feat/retry · 2026-08-29
+    </div>
+    <div class="score">
+      <span class="chip ok"><b>8</b> correct</span>
+      <span class="chip close"><b>3</b> close</span>
+      <span class="chip wrong"><b>2</b> wrong</span>
+      <span class="chip none"><b>1</b> unanswered</span>
+    </div>
+    <!-- widths are percentages of the total hunk count -->
+    <div class="bar">
+      <span class="ok" style="width:57%"></span>
+      <span class="close" style="width:21%"></span>
+      <span class="wrong" style="width:14%"></span>
+      <span class="none" style="width:8%"></span>
+    </div>
+  </header>
+
+  <h2>Summary</h2>
+  <div class="summary">
+    <p>You consistently catch added error handling, but tend to miss changes in the
+    ordering of async operations.</p>
+  </div>
+
+  <h2>Hunks</h2>
+
+  <!-- repeat one .hunk per hunk -->
+  <article class="hunk">
+    <div class="hunk-head">
+      <span class="n">2</span>
+      <span class="file">src/api/client.ts</span>
+      <span class="at">@@ -40,3 +48,9 @@</span>
+      <span class="verdict close">⚠️ Close</span>
+    </div>
+    <pre class="diff"><i class="h">@@ -40,3 +48,9 @@ export class ApiClient {</i><i>   async get(path) {</i><i class="d">-    return this.fetch(path)</i><i class="a">+    for (let i = 0; i &lt; this.retries; i++) {</i><i class="a">+      await sleep(2 ** i * 100)</i><i class="a">+    }</i></pre>
+    <div class="field">
+      <h3>Your interpretation</h3>
+      <blockquote>Adding a retry.</blockquote>
+    </div>
+    <div class="field">
+      <h3>What it actually does</h3>
+      <p>Adds a retry <em>and</em> an exponential backoff delay between attempts.</p>
+    </div>
+    <div class="field">
+      <h3>Notes</h3>
+      <p>The delay comes from <code>sleep(2 ** i * 100)</code> at
+      <code>src/api/client.ts:52</code>, which the interpretation does not mention.</p>
+    </div>
+  </article>
+
+  <footer>Generated by <a href="https://github.com/kaleidot725/wdyb">wdyb</a></footer>
+
+</div>
+</body>
+</html>

@@ -23,7 +23,7 @@ Requires [GitHub CLI](https://cli.github.com/), authenticated (`gh auth login`).
 
 Takes a PR number, a PR URL, or nothing (resolves the PR for the current branch). While answering: `skip` to pass on a hunk, `back` to revisit the previous one, `stop` to grade early.
 
-Add `--json` to write `wdyb-123.json` instead of Markdown, or `--both` for both. The JSON follows [`report-schema.json`](plugins/wdyb/skills/question/references/report-schema.json), so runs can be diffed or tracked over time.
+Add `--json` for a machine-readable report following [`report-schema.json`](plugins/wdyb/skills/question/references/report-schema.json), or `--html` for a standalone page with syntax-colored diffs and a score bar. Pass several to write several.
 
 ## Example output
 

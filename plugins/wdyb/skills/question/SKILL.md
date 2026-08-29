@@ -27,9 +27,10 @@ Write the report in the language the user has been writing in.
 
 ## Output format
 
-Markdown by default. `--json` writes `wdyb-<PR-number>.json` instead, and `--both` writes both.
+Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.html` instead; pass several to write several.
 
-For JSON, follow `references/report-schema.json` — same content, one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Read the schema file before writing, and validate the result parses.
+- **JSON** — follow `references/report-schema.json`: one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Read the schema before writing and check the result parses
+- **HTML** — start from `references/report-template.html` and replace its content, keeping the structure and CSS as they are. One `<article class="hunk">` per hunk; in the diff, one `<i>` per line with class `a` (added), `d` (removed), `h` (the `@@` header), or none for context, and escape `<`, `>`, `&`. Size the `.bar` spans as percentages of the hunk count. It is a single self-contained file — no external assets
 
 ## Markdown template
 
