@@ -1,7 +1,7 @@
 {
   "name": "wdyb",
   "description": "what do you build? - Read a GitHub PR one hunk at a time, write what you think each does, then get graded against the real code. Saves a report as wdyb-<PR-number>.md",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "kaleidot725",
     "url": "https://github.com/kaleidot725"

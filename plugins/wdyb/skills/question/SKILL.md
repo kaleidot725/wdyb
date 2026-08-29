@@ -36,9 +36,7 @@ While collecting:
 
 `pause` writes `wdyb-<PR-number>.json` with `"status": "in-progress"`: every hunk with its diff, answered ones carrying `interpretation`, unreached ones carrying none. Also refresh the HTML if the run was started with `--html`. Never write the Markdown report for a paused run — it is the graded artifact.
 
-`--resume` picks a run back up: read `wdyb-<PR-number>.json`, re-fetch the diff, and continue from the first hunk with no `interpretation`. State where you are (`Resuming at 6/14`) and ask that hunk. Do not re-ask answered hunks, and do not show the saved answers back to the user. If the file is missing, say so and offer to start over; if the diff has changed since, say so and ask whether to keep the answers that still match or start over.
-
-When a resumed run reaches the end, grade and write the report as usual, and set `"status": "complete"` in the JSON.
+Then tell the user to come back with `/wdyb:resume <PR-number>`, which is a separate skill.
 
 ## Output format
 
