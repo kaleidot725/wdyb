@@ -25,16 +25,16 @@ Claude Code で以下を実行します。
 ## 使い方
 
 ```
-/wdyb:q 123
+/wdyb:question 123
 ```
 
 引数には以下を渡せます。
 
 | 引数 | 例 |
 | --- | --- |
-| PR 番号 | `/wdyb:q 123` |
-| PR の URL | `/wdyb:q https://github.com/owner/repo/pull/123` |
-| なし | `/wdyb:q` — 現在のブランチに紐づく PR を探します |
+| PR 番号 | `/wdyb:question 123` |
+| PR の URL | `/wdyb:question https://github.com/owner/repo/pull/123` |
+| なし | `/wdyb:question` — 現在のブランチに紐づく PR を探します |
 
 対話中は次の入力が使えます。
 
