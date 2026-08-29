@@ -25,7 +25,13 @@ Present a PR's diff one hunk at a time and let the user write, in their own word
 
 Write the report in the language the user has been writing in.
 
-## Report template
+## Output format
+
+Markdown by default. `--json` writes `wdyb-<PR-number>.json` instead, and `--both` writes both.
+
+For JSON, follow `references/report-schema.json` — same content, one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Read the schema file before writing, and validate the result parses.
+
+## Markdown template
 
 ````markdown
 # wdyb #<number> — <PR title>
