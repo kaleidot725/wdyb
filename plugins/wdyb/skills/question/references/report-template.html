@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>wdyb #123 — Add retry to API client</title>
+<title>wdyb #&lt;number&gt; — &lt;PR title&gt;</title>
 <style>
   :root {
     --bg: #fbfbf9; --card: #fff; --fg: #1c1b19; --muted: #6b6862; --line: #e4e1da;
@@ -70,19 +70,20 @@
 </style>
 </head>
 <body>
+<!-- Structure only. Replace every &lt;...&gt; with real content; never reuse this wording. -->
 <div class="wrap">
 
   <header>
-    <h1>Add retry to API client</h1>
+    <h1>&lt;PR title&gt;</h1>
     <div class="meta">
-      <a href="https://github.com/owner/repo/pull/123">owner/repo #123</a>
-      · author · main ← feat/retry · 2026-08-29
+      <a href="&lt;PR URL&gt;">&lt;owner/repo&gt; #&lt;number&gt;</a>
+      · &lt;author&gt; · &lt;base&gt; ← &lt;head&gt; · &lt;YYYY-MM-DD&gt;
     </div>
     <div class="score">
-      <span class="chip ok"><b>8</b> correct</span>
-      <span class="chip close"><b>3</b> close</span>
-      <span class="chip wrong"><b>2</b> wrong</span>
-      <span class="chip none"><b>1</b> unanswered</span>
+      <span class="chip ok"><b>&lt;n&gt;</b> correct</span>
+      <span class="chip close"><b>&lt;n&gt;</b> close</span>
+      <span class="chip wrong"><b>&lt;n&gt;</b> wrong</span>
+      <span class="chip none"><b>&lt;n&gt;</b> unanswered</span>
     </div>
     <!-- widths are percentages of the total hunk count -->
     <div class="bar">
@@ -95,8 +96,7 @@
 
   <h2>Summary</h2>
   <div class="summary">
-    <p>You consistently catch added error handling, but tend to miss changes in the
-    ordering of async operations.</p>
+    <p>&lt;what kinds of change the user tends to misread, stated concretely&gt;</p>
   </div>
 
   <h2>Hunks</h2>
@@ -104,24 +104,23 @@
   <!-- repeat one .hunk per hunk -->
   <article class="hunk">
     <div class="hunk-head">
-      <span class="n">2</span>
-      <span class="file">src/api/client.ts</span>
-      <span class="at">@@ -40,3 +48,9 @@</span>
+      <span class="n">&lt;n&gt;</span>
+      <span class="file">&lt;file&gt;</span>
+      <span class="at">&lt;@@ header&gt;</span>
       <span class="verdict close">⚠️ Close</span>
     </div>
-    <pre class="diff"><i class="h">@@ -40,3 +48,9 @@ export class ApiClient {</i><i>   async get(path) {</i><i class="d">-    return this.fetch(path)</i><i class="a">+    for (let i = 0; i &lt; this.retries; i++) {</i><i class="a">+      await sleep(2 ** i * 100)</i><i class="a">+    }</i></pre>
+    <pre class="diff"><i class="h">&lt;@@ header line&gt;</i><i>&lt;context line&gt;</i><i class="d">&lt;removed line&gt;</i><i class="a">&lt;added line&gt;</i></pre>
     <div class="field">
       <h3>Your interpretation</h3>
-      <blockquote>Adding a retry.</blockquote>
+      <blockquote>&lt;the user's answer, verbatim&gt;</blockquote>
     </div>
     <div class="field">
       <h3>What it actually does</h3>
-      <p>Adds a retry <em>and</em> an exponential backoff delay between attempts.</p>
+      <p>&lt;the real behavior&gt;</p>
     </div>
     <div class="field">
       <h3>Notes</h3>
-      <p>The delay comes from <code>sleep(2 ** i * 100)</code> at
-      <code>src/api/client.ts:52</code>, which the interpretation does not mention.</p>
+      <p>&lt;evidence, citing file and line numbers&gt;</p>
     </div>
   </article>
 

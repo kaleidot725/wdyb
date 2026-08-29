@@ -1,36 +1,33 @@
-# wdyb #123 — Add retry to API client
+<!-- Structure only. Replace every <...> with real content; never reuse this wording. -->
 
-[owner/repo #123](https://github.com/owner/repo/pull/123) · author · main ← feat/retry · 2026-08-29
+# wdyb #<number> — <PR title>
 
-8 correct / 3 close / 2 wrong / 1 unanswered (14 hunks)
+[<owner/repo> #<number>](<PR URL>) · <author> · <base> ← <head> · <YYYY-MM-DD>
+
+<n> correct / <n> close / <n> wrong / <n> unanswered (<n> hunks)
 
 ## Summary
 
-You consistently catch added error handling, but tend to miss changes in the
-ordering of async operations.
+<what kinds of change the user tends to misread, stated concretely>
 
 ## Hunks
 
-### 2. `src/api/client.ts` `@@ -40,3 +48,9 @@` — ⚠️ Close
+<!-- one ### section per hunk, in the order they were asked -->
+
+### <n>. `<file>` `<@@ header>` — <✅ Correct | ⚠️ Close | ❌ Wrong | ➖ Unanswered>
 
 ```diff
-@@ -40,3 +48,9 @@ export class ApiClient {
-   async get(path) {
--    return this.fetch(path)
-+    for (let i = 0; i < this.retries; i++) {
-+      await sleep(2 ** i * 100)
-+    }
+<the hunk, in full>
 ```
 
 **Your interpretation**
 
-> Adding a retry.
+> <the user's answer, verbatim>
 
 **What it actually does**
 
-Adds a retry *and* an exponential backoff delay between attempts.
+<the real behavior>
 
 **Notes**
 
-The delay comes from `sleep(2 ** i * 100)` at `src/api/client.ts:52`, which the
-interpretation does not mention.
+<evidence, citing file and line numbers>

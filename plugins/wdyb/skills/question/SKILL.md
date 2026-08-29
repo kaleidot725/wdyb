@@ -11,7 +11,9 @@ Present a PR's diff one hunk at a time and let the user write, in their own word
 
 ## Hard rules
 
-- During collection, never signal right or wrong. No feedback, no acknowledgement, no hints — take the answer and move on
+- **Stop and wait.** After asking about a hunk, end your turn immediately. Nothing after the question — no extra text, no tool call, no moving to the next hunk. The user's next message is the answer. Do not use AskUserQuestion; ask in plain text
+- **Never answer for the user.** No example answers, no "you might say…", no starter phrasing, no hints about what to look at. The question is the last thing you write
+- During collection, never signal right or wrong — no feedback, no acknowledgement. Take the answer and move on to the next hunk
 - One hunk at a time. Never batch them
 - Record the user's interpretation verbatim. Do not summarize or rewrite it
 - Back every judgement with the real code. Never grade on a guess
@@ -19,7 +21,7 @@ Present a PR's diff one hunk at a time and let the user write, in their own word
 ## Steps
 
 1. **Split into hunks** — get the diff with `gh pr diff`, split on `@@`, and number them. Exclude lock files, generated files, and binaries. State the count before starting
-2. **Collect an answer per hunk** — show the full diff, ask "what do you think this does?", take the answer, move on. Accept `skip` / `back` / `stop`
+2. **Collect an answer per hunk** — show the full diff, ask "what do you think this does?", then **end your turn**. When the user replies, record it verbatim and show the next hunk. Accept `skip` / `back` / `stop`
 3. **Grade once all are answered** — read the real code to confirm what each hunk actually does, compare against the interpretation, and judge: `✅ Correct` / `⚠️ Close` / `❌ Wrong` / `➖ Unanswered`
 4. **Save the report** — write `wdyb-<PR-number>.md` and give the path
 
@@ -27,7 +29,7 @@ Write the report in the language the user has been writing in.
 
 ## Output format
 
-Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.html` instead; pass several to write several. Start from the matching file in `references/` and replace its content, keeping its structure.
+Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.html` instead; pass several to write several. Start from the matching file in `references/` and replace its content, keeping its structure. The templates show shape only — never carry their placeholder wording into a real report.
 
 - **Markdown** — `report-template.md`. One `###` section per hunk
 - **JSON** — `report-schema.json`: one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Check the result parses
