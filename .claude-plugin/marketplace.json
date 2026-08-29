@@ -1,0 +1,18 @@
+{
+  "name": "wdyb",
+  "owner": {
+    "name": "kaleidot725",
+    "url": "https://github.com/kaleidot725"
+  },
+  "metadata": {
+    "description": "what do you build? - PRの差分を自分の言葉で説明して理解度を測るSkill",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "wdyb",
+      "source": "./plugins/wdyb",
+      "description": "GitHubのPR差分をhunk単位で提示し、あなたの解釈を集めてから答え合わせをします"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "wdyb",
+  "description": "what do you build? - GitHubのPR差分をhunk単位で提示し、あなた自身の解釈を書き溜めたあとで答え合わせを行い、結果を wdyb-<PR番号>.md に保存します",
+  "version": "1.0.0",
+  "author": {
+    "name": "kaleidot725",
+    "url": "https://github.com/kaleidot725"
+  },
+  "homepage": "https://github.com/kaleidot725/wdyb",
+  "repository": "https://github.com/kaleidot725/wdyb",
+  "license": "MIT",
+  "keywords": ["github", "pull-request", "code-review", "learning", "diff"]
+}
