@@ -1,51 +1,53 @@
 ---
 name: question
-description: "what do you build? - GitHubのPRのコード差分をhunk単位で1つずつ提示し、ユーザー自身の解釈を書き溜めたあとで答え合わせをして、結果を wdyb-<PR番号>.md に保存する。ユーザーが「/wdyb:question <PR番号>」と入力したとき、PRの理解度を確認したいとき、コードリーディングの練習をしたいときに使う。"
+description: "what do you build? - Walk through a GitHub PR one hunk at a time, collect the user's own interpretation of each hunk, then grade them against the real code and save the result to wdyb-<PR-number>.md. Use when the user types /wdyb:question <PR number>, wants to check how well they understand a PR, or wants to practice code reading."
 ---
 
 # question — what do you build?
 
-PR の差分を hunk 単位で 1 つずつ提示し、ユーザーが「これは何をやっているか」を自分の言葉で書く。全部書き終えてから答え合わせをする。
+Present a PR's diff one hunk at a time and let the user write, in their own words, what each hunk does. Grade only after every hunk has been answered.
 
-**理解度を測るツールである。答えを先に教えたら意味がない。**
+**This measures understanding. Giving the answer away defeats the purpose.**
 
-## 絶対に守るルール
+## Hard rules
 
-- 収集フェーズ中は正誤を一切言わない。評価も相槌もヒントも返さず、受け取ったら次へ進むだけ
-- hunk は 1 つずつ出す。まとめて出さない
-- ユーザーの解釈は要約・整形せず、書かれたまま記録する
-- 分析は実コードを読んで裏を取る。推測で指摘しない
+- During collection, never signal right or wrong. No feedback, no acknowledgement, no hints — take the answer and move on
+- One hunk at a time. Never batch them
+- Record the user's interpretation verbatim. Do not summarize or rewrite it
+- Back every judgement with the real code. Never grade on a guess
 
-## 手順
+## Steps
 
-1. **hunk に分割する** — `gh pr diff` で差分を取得し、`@@` ごとに分割して通し番号を振る。lock ファイル・自動生成物・バイナリは除外。件数を伝えてから始める
-2. **hunk ごとに回答を記入してもらう** — 差分を全文提示して「これは何をやっていると思いますか？」と尋ね、解釈を受け取ったら次へ。`skip` / `back` / `stop` を受け付ける
-3. **全部終わったら理解が合っているか確認する** — 実コードを読んで実際の挙動を確認し、解釈と突き合わせて `✅ 正しい` / `⚠️ おしい` / `❌ 誤り` / `➖ 未回答` を判定する
-4. **レポートを保存する** — `wdyb-<PR番号>.md` に書き出してパスを伝える
+1. **Split into hunks** — get the diff with `gh pr diff`, split on `@@`, and number them. Exclude lock files, generated files, and binaries. State the count before starting
+2. **Collect an answer per hunk** — show the full diff, ask "what do you think this does?", take the answer, move on. Accept `skip` / `back` / `stop`
+3. **Grade once all are answered** — read the real code to confirm what each hunk actually does, compare against the interpretation, and judge: `✅ Correct` / `⚠️ Close` / `❌ Wrong` / `➖ Unanswered`
+4. **Save the report** — write `wdyb-<PR-number>.md` and give the path
 
-## レポートのテンプレート
+Write the report in the language the user has been writing in.
+
+## Report template
 
 ````markdown
-# wdyb #<番号> — <PRタイトル>
+# wdyb #<number> — <PR title>
 
-<URL> · 正しい 8 / おしい 3 / 誤り 2 / 未回答 1（全 14 hunk）
+<URL> · 8 correct / 3 close / 2 wrong / 1 unanswered (14 hunks)
 
-## 総評
+## Summary
 
-<どういう種類の差分で読み違えやすいか>
+<what kinds of change they tend to misread>
 
-## 2. src/api/client.ts `@@ -40,3 +48,9 @@` — ⚠️ おしい
+## 2. src/api/client.ts `@@ -40,3 +48,9 @@` — ⚠️ Close
 
 ```diff
-（差分）
+(diff)
 ```
 
-**あなたの解釈**
-> （書かれたまま）
+**Your interpretation**
+> (verbatim)
 
-**実際の内容**
-（何をしているか）
+**What it actually does**
+(the real behavior)
 
-**指摘**
-（根拠をファイル名と行番号で）
+**Notes**
+(evidence, with file and line numbers)
 ````

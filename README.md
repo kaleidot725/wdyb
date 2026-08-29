@@ -80,10 +80,6 @@ the ordering of async operations.
 Adds a retry *and* an exponential backoff delay between attempts. ...
 ```
 
-## Note on language
-
-The skill runs in whatever language you're already using with Claude Code — the instructions are written in Japanese, but your interpretations and the generated report follow your conversation.
-
 ## License
 
 MIT
