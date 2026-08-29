@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "what do you build? - Measure how well you understand a PR by explaining its diff in your own words",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {

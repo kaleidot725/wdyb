@@ -21,7 +21,7 @@ Requires [GitHub CLI](https://cli.github.com/), authenticated (`gh auth login`).
 /wdyb:question 123
 ```
 
-Takes a PR number, a PR URL, or nothing (resolves the PR for the current branch). While answering: `skip` to pass on a hunk, `back` to revisit the previous one, `stop` to grade early.
+Takes a PR number, a PR URL, or nothing (resolves the PR for the current branch). While answering: `skip` to pass on a hunk, `back` to revisit the previous one, `stop` to grade early, `pause` to save progress and walk away. Come back with `/wdyb:question 123 --resume` and it picks up at the next unanswered hunk.
 
 Add `--json` for a machine-readable report following [`report-schema.json`](plugins/wdyb/skills/question/references/report-schema.json), or `--html` for a standalone page with syntax-colored diffs and a score bar. Pass several to write several.
 

@@ -3,57 +3,152 @@
   "$id": "https://github.com/kaleidot725/wdyb/report-schema.json",
   "title": "wdyb report",
   "type": "object",
-  "required": ["pr", "date", "score", "summary", "hunks"],
+  "required": [
+    "pr",
+    "date",
+    "status",
+    "hunks"
+  ],
   "additionalProperties": false,
   "properties": {
     "pr": {
       "type": "object",
-      "required": ["number", "title", "url", "repository"],
+      "required": [
+        "number",
+        "title",
+        "url",
+        "repository"
+      ],
       "additionalProperties": false,
       "properties": {
-        "number": { "type": "integer" },
-        "title": { "type": "string" },
-        "url": { "type": "string" },
-        "repository": { "type": "string", "description": "owner/repo" },
-        "author": { "type": "string" },
-        "base": { "type": "string" },
-        "head": { "type": "string" }
+        "number": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string",
+          "description": "owner/repo"
+        },
+        "author": {
+          "type": "string"
+        },
+        "base": {
+          "type": "string"
+        },
+        "head": {
+          "type": "string"
+        }
       }
     },
-    "date": { "type": "string", "description": "YYYY-MM-DD" },
+    "date": {
+      "type": "string",
+      "description": "YYYY-MM-DD"
+    },
+    "status": {
+      "enum": [
+        "in-progress",
+        "complete"
+      ],
+      "description": "in-progress reports are paused runs; score and summary are absent"
+    },
     "score": {
       "type": "object",
-      "required": ["correct", "close", "wrong", "unanswered", "total"],
+      "required": [
+        "correct",
+        "close",
+        "wrong",
+        "unanswered",
+        "total"
+      ],
       "additionalProperties": false,
       "properties": {
-        "correct": { "type": "integer" },
-        "close": { "type": "integer" },
-        "wrong": { "type": "integer" },
-        "unanswered": { "type": "integer" },
-        "total": { "type": "integer", "description": "number of hunks graded" }
-      }
+        "correct": {
+          "type": "integer"
+        },
+        "close": {
+          "type": "integer"
+        },
+        "wrong": {
+          "type": "integer"
+        },
+        "unanswered": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer",
+          "description": "number of hunks graded"
+        }
+      },
+      "description": "present once graded"
     },
-    "summary": { "type": "string", "description": "what kinds of change the user tends to misread" },
+    "summary": {
+      "type": "string",
+      "description": "present once graded; what kinds of change the user tends to misread"
+    },
     "excluded": {
       "type": "array",
       "description": "files skipped as lock/generated/binary",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string"
+      }
     },
     "hunks": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["index", "file", "header", "diff", "interpretation", "actual", "verdict"],
+        "required": [
+          "index",
+          "file",
+          "header",
+          "diff"
+        ],
         "additionalProperties": false,
         "properties": {
-          "index": { "type": "integer", "description": "1-based position in the run" },
-          "file": { "type": "string" },
-          "header": { "type": "string", "description": "the @@ line" },
-          "diff": { "type": "string", "description": "the hunk body, newline separated" },
-          "interpretation": { "type": "string", "description": "the user's answer, verbatim; empty when unanswered" },
-          "actual": { "type": "string", "description": "what the hunk actually does" },
-          "notes": { "type": "string", "description": "evidence, with file and line numbers" },
-          "verdict": { "enum": ["correct", "close", "wrong", "unanswered"] }
+          "index": {
+            "type": "integer",
+            "description": "1-based position in the run"
+          },
+          "file": {
+            "type": "string"
+          },
+          "header": {
+            "type": "string",
+            "description": "the @@ line"
+          },
+          "diff": {
+            "type": "string",
+            "description": "the hunk body, newline separated"
+          },
+          "interpretation": {
+            "type": "string",
+            "description": "the user's answer, verbatim; absent if not reached yet"
+          },
+          "skipped": {
+            "type": "boolean",
+            "description": "true if the user typed skip"
+          },
+          "actual": {
+            "type": "string",
+            "description": "what the hunk actually does; present once graded"
+          },
+          "notes": {
+            "type": "string",
+            "description": "evidence, with file and line numbers"
+          },
+          "verdict": {
+            "enum": [
+              "correct",
+              "close",
+              "wrong",
+              "unanswered"
+            ],
+            "description": "present once graded"
+          }
         }
       }
     }

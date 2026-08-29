@@ -21,11 +21,24 @@ Present a PR's diff one hunk at a time and let the user write, in their own word
 ## Steps
 
 1. **Split into hunks** — get the diff with `gh pr diff`, split on `@@`, and number them. Exclude lock files, generated files, and binaries. State the count before starting
-2. **Collect an answer per hunk** — show the full diff, ask "what do you think this does?", then **end your turn**. When the user replies, record it verbatim and show the next hunk. Accept `skip` / `back` / `stop`
+2. **Collect an answer per hunk** — show the full diff, ask "what do you think this does?", then **end your turn**. When the user replies, record it verbatim and show the next hunk. Accept `skip` / `back` / `stop` / `pause`
 3. **Grade once all are answered** — read the real code to confirm what each hunk actually does, compare against the interpretation, and judge: `✅ Correct` / `⚠️ Close` / `❌ Wrong` / `➖ Unanswered`
 4. **Save the report** — write `wdyb-<PR-number>.md` and give the path
 
 Write the report in the language the user has been writing in.
+
+## Pausing and resuming
+
+While collecting:
+
+- `stop` — stop asking and grade what has been answered so far
+- `pause` — stop without grading. Save progress and say how to resume
+
+`pause` writes `wdyb-<PR-number>.json` with `"status": "in-progress"`: every hunk with its diff, answered ones carrying `interpretation`, unreached ones carrying none. Also refresh the HTML if the run was started with `--html`. Never write the Markdown report for a paused run — it is the graded artifact.
+
+`--resume` picks a run back up: read `wdyb-<PR-number>.json`, re-fetch the diff, and continue from the first hunk with no `interpretation`. State where you are (`Resuming at 6/14`) and ask that hunk. Do not re-ask answered hunks, and do not show the saved answers back to the user. If the file is missing, say so and offer to start over; if the diff has changed since, say so and ask whether to keep the answers that still match or start over.
+
+When a resumed run reaches the end, grade and write the report as usual, and set `"status": "complete"` in the JSON.
 
 ## Output format
 
@@ -33,4 +46,4 @@ Markdown by default. `--json` and `--html` write `wdyb-<PR-number>.json` / `.htm
 
 - **Markdown** — `report-template.md`. One `###` section per hunk
 - **JSON** — `report-schema.json`: one object with `pr`, `date`, `score`, `summary`, `excluded`, and a `hunks` array whose entries carry `interpretation`, `actual`, `notes`, and a `verdict` of `correct` / `close` / `wrong` / `unanswered`. Check the result parses
-- **HTML** — `report-template.html`. Keep the CSS as is. One `<article class="hunk">` per hunk; in the diff, one `<i>` per line with class `a` (added), `d` (removed), `h` (the `@@` header), or none for context, and escape `<`, `>`, `&`. Size the `.bar` spans as percentages of the hunk count. Self-contained — no external assets
+- **HTML** — `report-template.html`. Keep the CSS as is. For a paused run, mark ungraded hunks `⏸ Pending` with `<span class="verdict none">`, drop their "What it actually does" and "Notes" fields, and replace the score chips with answered / remaining counts. One `<article class="hunk">` per hunk; in the diff, one `<i>` per line with class `a` (added), `d` (removed), `h` (the `@@` header), or none for context, and escape `<`, `>`, `&`. Size the `.bar` spans as percentages of the hunk count. Self-contained — no external assets
