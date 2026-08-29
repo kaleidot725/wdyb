@@ -5,14 +5,14 @@
     "url": "https://github.com/kaleidot725"
   },
   "metadata": {
-    "description": "what do you build? - PRの差分を自分の言葉で説明して理解度を測るSkill",
+    "description": "what do you build? - Measure how well you understand a PR by explaining its diff in your own words",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "wdyb",
       "source": "./plugins/wdyb",
-      "description": "GitHubのPR差分をhunk単位で提示し、あなたの解釈を集めてから答え合わせをします"
+      "description": "Read a GitHub PR one hunk at a time, write what you think each does, then get graded against the real code"
     }
   ]
 }
