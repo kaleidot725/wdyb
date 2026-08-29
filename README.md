@@ -1,4 +1,4 @@
-# wdyb — what do you build?
+# What do you build? - Question
 
 A Claude Code skill that walks you through a GitHub pull request **one hunk at a time** and asks: *what do you think this does?*
 
